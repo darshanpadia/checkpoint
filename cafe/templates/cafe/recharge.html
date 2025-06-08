@@ -1,0 +1,25 @@
+{% extends 'cafe/base.html' %}
+{% block content %}
+<h2>Recharge Player Offer</h2>
+<form method="post">
+  {% csrf_token %}
+  
+  <div class="form-group">
+    <label for="player">Select Player</label>
+    <select name="player" id="player" class="form-control">
+      <option value="">-- Select Existing Player --</option>
+      {% for player in players %}
+        <option value="{{ player.id }}">{{ player.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group mt-3">
+    <label for="new_player_name">Or Enter New Player Name</label>
+    <input type="text" name="new_player_name" id="new_player_name" class="form-control" placeholder="New player name">
+  </div>
+
+  <button type="submit" class="btn btn-primary mt-3">Add Recharge</button>
+</form>
+
+{% endblock %}

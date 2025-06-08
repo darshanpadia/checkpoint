@@ -1,0 +1,33 @@
+{% extends 'cafe/base.html' %}
+{% block content %}
+<h2>Manage Beverages</h2>
+
+<form method="post" class="row g-3 mb-4">
+    {% csrf_token %}
+    <div class="col-md-5">
+        <input type="text" name="name" placeholder="Beverage Name" class="form-control" required>
+    </div>
+    <div class="col-md-3">
+        <input type="number" name="price" placeholder="Price" step="0.01" class="form-control" required>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success">Add Beverage</button>
+    </div>
+</form>
+
+{% if beverages %}
+<table class="table table-striped">
+    <thead><tr><th>Name</th><th>Price</th></tr></thead>
+    <tbody>
+        {% for bev in beverages %}
+        <tr>
+            <td>{{ bev.name }}</td>
+            <td>₹{{ bev.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No beverages added yet.</p>
+{% endif %}
+{% endblock %}

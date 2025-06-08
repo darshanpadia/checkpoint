@@ -1,0 +1,23 @@
+{% extends 'cafe/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Session Checkout</h2>
+
+  <p><strong>Player:</strong> {{ session.player.name }}</p>
+  <p><strong>Check-In Time:</strong> {{ session.check_in }}</p>
+  <p><strong>Duration:</strong> {{ duration_minutes }} minutes</p>
+
+  <h4>Billing Summary</h4>
+  <ul>
+    <li><strong>Time Charges:</strong> ₹{{ time_charge }}</li>
+    <li><strong>Beverage Charges:</strong> ₹{{ beverage_charge }}</li>
+    <li><strong>Total:</strong> ₹{{ total_bill }}</li>
+  </ul>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success">Confirm Checkout</button>
+    <a href="{% url 'home' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

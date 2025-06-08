@@ -1,0 +1,36 @@
+{% extends 'cafe/base.html' %}
+{% block content %}
+<h2>Add Beverages for <span style="color: #6B8E23;">{{ session.player.name }}</span></h2>
+<form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <label class="form-label">Select Beverage</label>
+        <select name="beverage" class="form-select">
+            {% for b in beverages %}
+            <option value="{{ b.id }}">{{ b.name }} - ₹{{ b.price }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Qty</label>
+        <input type="number" name="quantity" class="form-control" min="1" value="1" required>
+    </div>
+    <div class="col-md-4 align-self-end">
+        <button class="btn btn-primary">Add</button>
+    </div>
+</form>
+
+<h4 class="mt-4">Current Orders</h4>
+<table class="table">
+    <thead><tr><th>Item</th><th>Qty</th><th>Price</th></tr></thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.beverage.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.total_price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

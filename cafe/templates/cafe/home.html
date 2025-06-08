@@ -1,0 +1,42 @@
+{% extends 'cafe/base.html' %}
+{% block content %}
+<div class="container mt-4">
+
+    <!-- ✅ Heading and Button Row -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Active Sessions</h2>
+        <a href="{% url 'checkin' %}" class="btn btn-primary">➕ New Check In</a>
+    </div>
+
+    {% if sessions %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Check-In</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for session in sessions %}
+                <tr>
+                    <td><a href="{% url 'player_profile' session.player.id %}">
+                        {{ session.player.name }}
+                    </a></td>
+                    <td>{{ session.check_in }}</td>
+                    <td>{{ session.duration_pretty }}</td>
+                    <td>
+                        <a href="{% url 'add_beverages' session.id %}" class="btn btn-sm btn-secondary">Add Beverages</a>
+                        <a href="{% url 'checkout' session.id %}" class="btn btn-sm btn-danger">Checkout</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No active sessions.</p>
+    {% endif %}
+
+</div>
+{% endblock %}

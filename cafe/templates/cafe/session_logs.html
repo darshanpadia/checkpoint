@@ -1,0 +1,50 @@
+{% extends 'cafe/base.html' %}
+{% block content %}
+<h2>Session Logs</h2>
+
+{% if sessions %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Player</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Duration</th>
+            <th>Beverages</th>
+            <th>Session-Cost</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for session in sessions %}
+        <tr>
+            <td><a href="{% url 'player_profile' session.player.id %}">
+                {{ session.player.name }}
+            </a></td>
+            <td>{{ session.check_in|date:"M d, Y H:i" }}</td>
+            <td>
+                {% if session.check_out %}
+                    {{ session.check_out|date:"M d, Y H:i" }}
+                {% else %}
+                    In Progress
+                {% endif %}
+            </td>
+            <td>
+                {% if session.check_out %}
+                    {{ session.duration_pretty }}
+                {% else %}
+                    In Progress
+                {% endif %}
+            </td>
+            <td>₹{{ session.get_beverage_total }}</td>
+            <td>₹{{ session.get_time_total }}</td>
+            <td><strong>₹{{ session.get_total_bill }}</strong></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No sessions logged yet.</p>
+{% endif %}
+
+{% endblock %}

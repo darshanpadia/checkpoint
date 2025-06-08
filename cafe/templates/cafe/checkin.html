@@ -1,0 +1,41 @@
+{% extends 'cafe/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Check In Player</h2>
+
+  {% if error %}
+  <div class="alert alert-danger" role="alert">
+    {{ error }}
+    {% if active_session %}
+      <hr>
+      <strong>Active Session Details:</strong><br>
+      Player: {{ active_session.player.name }}<br>
+      Check-in Time: {{ active_session.check_in|date:"M d, Y H:i" }}<br>
+      Duration: {{ active_session.duration_pretty }}
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="player" class="form-label">Select Existing Player</label>
+      <select name="player" id="player" class="form-select">
+        <option value="">-- None --</option>
+        {% for p in players %}
+          <option value="{{ p.id }}">{{ p.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="new_player_name" class="form-label">Or Add New Player Name</label>
+      <input type="text" name="new_player_name" id="new_player_name" class="form-control" placeholder="Enter new player name" autocomplete="off">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Check In</button>
+  </form>
+</div>
+{% endblock %}

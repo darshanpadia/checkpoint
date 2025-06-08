@@ -1,0 +1,59 @@
+{% extends "cafe/base.html" %}
+{% block content %}
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-3">Player: <span class="text-success">{{ player.name }}</span></h2>
+
+      <div class="row mb-4">
+        <div class="col-md-4">
+          <div class="p-3 bg-light rounded text-center">
+            <h6 class="text-muted">Recharge Balance</h6>
+            <p class="h4 text-success">{{ hours_remaining }} <small>hours</small></p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 bg-light rounded text-center">
+            <h6 class="text-muted">Total Time Played</h6>
+            <p class="h4 text-primary">{{ total_minutes }} <small>minutes</small></p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-3 bg-light rounded text-center">
+            <h6 class="text-muted">Total Spent</h6>
+            <p class="h4 text-danger">₹{{ total_spent }}</p>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="mb-3">Past Sessions</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover table-sm align-middle">
+          <thead class="table-secondary">
+            <tr>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Duration</th>
+              <th>Beverages</th>
+              <th>Total Bill</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for session in sessions %}
+            <tr>
+              <td>{{ session.check_in|date:"M d, Y H:i" }}</td>
+              <td>{{ session.check_out|date:"M d, Y H:i"|default:"--" }}</td>
+              <td>{{ session.duration_pretty }}</td>
+              <td>₹{{ session.get_beverage_total }}</td>
+              <td><strong>₹{{ session.get_total_bill }}</strong></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="text-center text-muted">No sessions found.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+/venv/
+.vscode/
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+__pycache__/
