@@ -1,1 +1,1 @@
-web: gunicorn checkout.wsgi --log-file -
+web: gunicorn checkpoint.wsgi --log-file -
